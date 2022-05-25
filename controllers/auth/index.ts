@@ -27,3 +27,6 @@ const findOrCreateAuth = async ({ email }: { email: string }): Promise<Auth> => 
 
   return newAuth;
 };
+
+export const findUserByEmailAndCode = async ({ email, code }): Promise<{ token }> =>
+  await Auth.findByEmailAndCode({ email, code });

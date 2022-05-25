@@ -1,8 +1,8 @@
 import { NextApiResponse } from "next";
 import methods from "micro-method-router";
-import { Auth } from "models";
 import * as yup from "yup";
 import { schemaMiddleware } from "middleware";
+import { findUserByEmailAndCode } from "controllers";
 
 // # POST /auth/token
 // # Recibe un email y un código y valida que sean los correctos.
@@ -13,14 +13,12 @@ const bodySchema = yup.object().shape({
 });
 
 const postToken = async (res: NextApiResponse, { email, code }) => {
-  const result = await Auth.findByEmailAndCode({ email, code });
+  try {
+    const { token } = await findUserByEmailAndCode({ email, code });
 
-  if (result?.token) {
-    res.status(200).json({ token: result.token });
-  }
-
-  if (result?.message) {
-    res.status(401).json({ message: result.message });
+    if (token) res.status(200).json({ token });
+  } catch (err) {
+    res.status(401).json({ message: err });
   }
 };
 

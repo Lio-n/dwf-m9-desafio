@@ -40,13 +40,12 @@ class Auth {
   }: {
     email: string;
     code: number;
-  }): Promise<{ message?; token? }> {
+  }): Promise<{ token }> {
     const auth = await this.findByEmail({ email });
 
-    if (!auth) return { message: "El email no esta registrado" };
-    if (auth.data.code !== code) return { message: "El codigo no es valido" };
-    if (isAfter(new Date(), auth.data.expires.toDate()))
-      return { message: "El tiempo ha expirado" };
+    if (!auth) throw "El email no esta registrado";
+    if (auth.data.code !== code) throw "El codigo no es valido";
+    if (isAfter(new Date(), auth.data.expires.toDate())) throw "El tiempo ha expirado";
 
     const token = generateToken({ userId: auth.data.userId });
     return { token };

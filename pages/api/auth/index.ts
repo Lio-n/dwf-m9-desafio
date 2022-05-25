@@ -15,7 +15,7 @@ const postAuth = async (res: NextApiResponse, { email }) => {
     const { message } = await sendCode({ email }); // * encontrar/crear un registro
     res.status(200).send({ message });
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(400).json({ err });
   }
 };
 

@@ -12,8 +12,8 @@ export const schemaMiddleware = ({ schema, callback, request }: schemaMiddleware
 
       const result = await schema.validate(search);
       callback(res, result);
-    } catch (err) {
-      res.status(400).json({ message: err.message });
+    } catch ({ message }) {
+      res.status(400).json({ message });
     }
   };
 };

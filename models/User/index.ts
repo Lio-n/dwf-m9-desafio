@@ -11,7 +11,6 @@ class User {
   }
   async pull() {
     const snap = await this.ref.get();
-    console.log("🚀 ~ file: index.ts ~ line 23 ~ User ~ pull ~ snap", snap);
     this.data = snap.data();
   }
   async push() {
@@ -22,7 +21,7 @@ class User {
     const cleanEmail = email.trim().toLocaleLowerCase();
     const newUserSnap = await collection.add({ email: cleanEmail });
     const newUser = new User(newUserSnap.id);
-    // newUser.data = { email };
+    newUser.data = { email };
     return newUser;
   }
 }

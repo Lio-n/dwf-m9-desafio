@@ -10,7 +10,7 @@ const postAuth = async (res: NextApiResponse, { id }) => {
     const userData = await getUserData({ id });
     res.status(200).json(userData);
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(400).json({ err });
   }
 };
 
