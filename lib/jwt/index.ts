@@ -10,8 +10,7 @@ const decodeToken = ({ token }: { token: string }): string | null => {
   try {
     const { userId } = jwt.verify(token, JWT_SECRET);
     return userId;
-  } catch (error) {
-    console.error("Token Incorrecto");
+  } catch (err) {
     return null;
   }
 };

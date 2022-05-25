@@ -33,9 +33,10 @@ class User {
 
   static async createNewUser({ email }: { email: string }): Promise<User> {
     const cleanEmail = email.trim().toLocaleLowerCase();
-    const newUserSnap = await collection.add({ email: cleanEmail });
+    const createdAt = new Date();
+    const newUserSnap = await collection.add({ email: cleanEmail, createdAt });
     const newUser = new User(newUserSnap.id);
-    newUser.data = { email };
+    newUser.data = { email, createdAt };
     return newUser;
   }
 }
