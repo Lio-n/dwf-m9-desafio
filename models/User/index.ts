@@ -1,5 +1,16 @@
 import { firestore } from "lib";
 
+type UserData = {
+  code: number;
+  createdAt: Date;
+  // ToDo : Cada vez que se completa una orden, la coll Order debe actualizar este campo.
+  purchased_products: string[]; // Almacena los ids de las Order que realizo
+  // * ↓ Estas propiedades son posibles actulizar por el user.
+  full_name: string;
+  email: string;
+  address: string;
+  avatar_picture: string; // url : base64
+};
 const collection = firestore.collection("user");
 class User {
   ref: FirebaseFirestore.DocumentReference;
@@ -15,6 +26,9 @@ class User {
   }
   async push() {
     this.ref.update(this.data);
+  }
+  setData(newData) {
+    this.data = { ...newData };
   }
 
   static async createNewUser({ email }: { email: string }): Promise<User> {

@@ -4,7 +4,7 @@ import * as yup from "yup";
 import { schemaMiddleware } from "middleware";
 import { findUserByEmailAndCode } from "controllers";
 
-// # POST /auth/token
+// $ POST /auth/token
 // # Recibe un email y un código y valida que sean los correctos.
 // # En el caso de que sean correctos, y que el código no esté vencido, devuelve un token e invalida el código.
 const bodySchema = yup.object().shape({

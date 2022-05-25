@@ -6,9 +6,10 @@ const generateToken = ({ userId }: { userId: string }): string => {
   return jwt.sign({ userId }, JWT_SECRET);
 };
 
-const decodeToken = ({ token }: { token: string }): object | null => {
+const decodeToken = ({ token }: { token: string }): string | null => {
   try {
-    return jwt.verify(token, JWT_SECRET);
+    const { userId } = jwt.verify(token, JWT_SECRET);
+    return userId;
   } catch (error) {
     console.error("Token Incorrecto");
     return null;

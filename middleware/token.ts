@@ -9,11 +9,11 @@ export const authMiddleware = (callback) => {
 
       if (!token) throw "No hay token";
 
-      const decodedToken = decodeToken({ token });
+      const userId = decodeToken({ token });
 
-      if (!decodedToken) throw "Token incorrecto";
+      if (!userId) throw "Token incorrecto";
 
-      if (decodedToken) callback(res, decodedToken);
+      if (userId) callback({ req, res, userId });
     } catch (err) {
       res.status(401).json({ message: err });
     }
