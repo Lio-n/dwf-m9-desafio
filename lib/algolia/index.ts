@@ -12,4 +12,12 @@ const getProducts = async ({ newLimit, newOffset, query }): Promise<{ hits; nbHi
   return { hits, nbHits };
 };
 
-export default getProducts;
+const getOneProduct = async (id: string): Promise<Product> => {
+  try {
+    return await products_index.getObject(id);
+  } catch (error) {
+    throw error.message;
+  }
+};
+
+export { getProducts, getOneProduct };

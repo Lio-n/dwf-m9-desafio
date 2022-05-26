@@ -1,4 +1,4 @@
-import { getProducts } from "lib";
+import { getOneProduct, getProducts } from "lib";
 
 const getProductsByLimitAndOffset = async ({
   limit,
@@ -28,4 +28,8 @@ const checkOffsetAndLimit = ({
 
   return { newLimit: limit, newOffset: offset };
 };
-export default getProductsByLimitAndOffset;
+
+const getProductById = async (id: string): Promise<Product> => {
+  return await getOneProduct(id);
+};
+export { getProductsByLimitAndOffset, getProductById };

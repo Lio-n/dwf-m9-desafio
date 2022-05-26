@@ -7,7 +7,8 @@ import getRandomNum from "./random-seed";
 import sendCodeToEmail from "./sendgrid";
 import { decodeToken, generateToken } from "./jwt";
 import airtableBase from "./airtable";
-import getProducts from "./algolia";
+import { getProducts, getOneProduct } from "./algolia";
+import { createPreference } from "./mercadopago";
 
 export {
   getRandomNum,
@@ -18,4 +19,6 @@ export {
   generateToken,
   airtableBase,
   getProducts,
+  getOneProduct,
+  createPreference,
 };
