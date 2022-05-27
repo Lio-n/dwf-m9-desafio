@@ -1,8 +1,8 @@
 // * Los controllers no se comunican de manera DIRECTA con la Base de datos ni con las librerías.
-import { getUserData, updateUserData } from "./user";
+import { getOrdersFromUser, getUserData, setOrderGenerated, updateUserData } from "./user";
 import { findUserByEmailAndCode, sendCode } from "./auth";
 import { getProductsByLimitAndOffset, getProductById } from "./product";
-import { generateOrder } from "./order";
+import { generateOrder, getOrders } from "./order";
 
 export {
   getUserData,
@@ -12,4 +12,7 @@ export {
   getProductsByLimitAndOffset,
   getProductById,
   generateOrder,
+  setOrderGenerated,
+  getOrdersFromUser,
+  getOrders,
 };

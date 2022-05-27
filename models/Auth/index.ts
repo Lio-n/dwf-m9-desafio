@@ -1,10 +1,16 @@
 import { firestore, generateToken } from "lib";
-import { isAfter } from "date-fns";
+import { fromUnixTime, isAfter } from "date-fns";
 
 const collection = firestore.collection("auth");
+type AuthData = {
+  email: string;
+  user_id: string;
+  code: number;
+  expires: Date;
+};
 class Auth {
   ref: FirebaseFirestore.DocumentReference;
-  data: any;
+  data: AuthData;
   id: string;
   constructor(id) {
     this.id = id;
@@ -12,7 +18,7 @@ class Auth {
   }
   async pull() {
     const snap = await this.ref.get();
-    this.data = snap.data();
+    this.data = snap.data() as AuthData;
   }
   async push() {
     this.ref.update(this.data);
@@ -31,7 +37,7 @@ class Auth {
 
     const first = results.docs[0];
     const newAuth = new Auth(first.id);
-    newAuth.data = { ...first.data() };
+    newAuth.data = { ...first.data() } as AuthData;
     return newAuth;
   }
   static async findByEmailAndCode({
@@ -45,16 +51,23 @@ class Auth {
 
     if (!auth) throw "El email no esta registrado";
     if (auth.data.code !== code) throw "El codigo no es valido";
-    if (isAfter(new Date(), auth.data.expires.toDate())) throw "El tiempo ha expirado";
+    if (isAfter(new Date(), fromUnixTime(auth.data.expires["_seconds"])))
+      throw "El tiempo ha expirado";
 
-    const token = generateToken({ userId: auth.data.userId });
+    const token = generateToken(auth.data.user_id);
     return { token };
   }
   static async createNewAuth({ email, userId }: { email: string; userId: string }): Promise<Auth> {
     const cleanEmail = this.cleanEmail({ email });
-    const newAuthSnap = await collection.add({ email: cleanEmail, userId });
+    const authBase = {
+      email,
+      user_id: userId,
+      code: null,
+      expires: null,
+    };
+    const newAuthSnap = await collection.add(authBase);
     const newAuth = new Auth(newAuthSnap.id);
-    newAuth.data = { email };
+    newAuth.data = { email } as AuthData;
     return newAuth;
   }
 }

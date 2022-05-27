@@ -1,8 +1,8 @@
-import { getProductById } from "controllers";
+import { getProductById, setOrderGenerated } from "controllers";
 import { createPreference } from "lib";
 import { Order } from "models";
 
-export const generateOrder = async ({
+const generateOrder = async ({
   additionalInfo,
   productId,
   userId,
@@ -11,6 +11,7 @@ export const generateOrder = async ({
   const promiseProduct = getProductById(productId);
 
   const [order_id, product] = await Promise.all([promiseOrder, promiseProduct]);
+  setOrderGenerated({ order_id, userId }); // Guardo en User las ordenes generadas
 
   // * Elimino la propiedad 'description' del producto porque la API de MP me genera este error.
   // * Error: The next fields are failing on validation: ".items[0].description": should NOT be longer than 256 characters.
@@ -29,3 +30,14 @@ export const generateOrder = async ({
 
   return await createPreference(data);
 };
+
+const getOrders = async (orders) => {
+  const arrOrders = orders.map((order_id, index) => {
+    index = new Order(order_id);
+    return index.pull();
+  });
+
+  const results = await Promise.all(arrOrders);
+  return results;
+};
+export { generateOrder, getOrders };

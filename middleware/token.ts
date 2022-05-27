@@ -9,7 +9,7 @@ export const authMiddleware = (callback) => {
 
       if (!token) throw "No hay token";
 
-      const userId = decodeToken({ token });
+      const userId = decodeToken(token);
 
       if (!userId) throw "Token incorrecto";
 

@@ -11,7 +11,7 @@ const getProduct = async (req: NextApiRequest, res: NextApiResponse) => {
 
     res.status(200).json({ product });
   } catch (err) {
-    res.status(404).json(err);
+    res.status(404).json({ message: err });
   }
 };
 

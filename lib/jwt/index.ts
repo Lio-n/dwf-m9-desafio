@@ -1,12 +1,12 @@
 import * as jwt from "jsonwebtoken";
 const { JWT_SECRET } = process.env;
 
-const generateToken = ({ userId }: { userId: string }): string => {
+const generateToken = (userId: string): string => {
   // * JWT: Generates token
   return jwt.sign({ userId }, JWT_SECRET);
 };
 
-const decodeToken = ({ token }: { token: string }): string | null => {
+const decodeToken = (token: string): string | null => {
   try {
     const { userId } = jwt.verify(token, JWT_SECRET);
     return userId;

@@ -7,7 +7,7 @@ import * as yup from "yup";
 // # Devuelve info del user asociado a ese token
 const getMe = async ({ res, userId }: CustomEndpointWithoutReq) => {
   try {
-    const userData = await getUserData({ userId });
+    const userData = await getUserData(userId);
 
     res.status(200).json(userData);
   } catch (err) {
