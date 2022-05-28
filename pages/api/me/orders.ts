@@ -6,8 +6,8 @@ import { authMiddleware } from "middleware";
 // # Devuelve todas mis ordenes con sus status.
 const getOrder = async ({ res, userId }: CustomEndpointWithoutReq) => {
   try {
-    const products = await getOrdersFromUser(userId);
-    res.status(200).json({ products });
+    const orders = await getOrdersFromUser(userId);
+    res.status(200).json({ orders });
   } catch (err) {
     res.status(404).json({ message: err });
   }

@@ -25,7 +25,7 @@ const generateOrder = async ({
       failure: "url_pago_cancelado",
     },
     external_reference: order_id,
-    notification_url: "https://pagos-testing-mp.vercel.app/api/webhooks/mercadopago",
+    notification_url: "https://dwf-m9-desafio.vercel.app/api/ipn/mercadopago",
   };
 
   return await createPreference(data); // Return : URL para realizar el pago

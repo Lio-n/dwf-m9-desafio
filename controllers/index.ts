@@ -1,4 +1,4 @@
-// * Los controllers no se comunican de manera DIRECTA con la Base de datos ni con las librerías.
+// * Los controllers no se comunican de manera DIRECTA con la Base de datos.
 import { getOrdersFromUser, getUserData, setOrderGenerated, updateUserData } from "./user";
 import { findUserByEmailAndCode, sendCode } from "./auth";
 import { getProductsByLimitAndOffset, getProductById } from "./product";
