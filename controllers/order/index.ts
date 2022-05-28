@@ -7,10 +7,9 @@ const generateOrder = async ({
   productId,
   userId,
 }: GenerateOrderParams): Promise<string> => {
-  const promiseOrder = Order.createNewOrder({ additionalInfo, productId, userId });
-  const promiseProduct = getProductById(productId);
+  const product = await getProductById(productId);
+  const order_id = await Order.createNewOrder({ additionalInfo, productId, userId });
 
-  const [order_id, product] = await Promise.all([promiseOrder, promiseProduct]);
   setOrderGenerated({ order_id, userId }); // Guardo en User las ordenes generadas
 
   // * Elimino la propiedad 'description' del producto porque la API de MP me genera este error.
