@@ -14,9 +14,22 @@ const sendCodeToEmail = async ({ email, code }: SendCodeToEmailParams): Promise<
     subject: `Tu código para ingresar es ${code}`,
     html: `
             <h3>Insertá este código para ingresar</h3>
-            <h1>${code}</h1>`,
+            <h2>${code}</h2>`,
   };
+
   await sgMail.send(msg);
 };
 
-export default sendCodeToEmail;
+const sendConfirmEmail = async (email: string): Promise<void> => {
+  const msg = {
+    to: email,
+    from: "lionflex27@gmail.com",
+    subject: `Comprar Exitosa`,
+    html: `
+            <h2>Tu compra se realizó con exito</h2>`,
+  };
+
+  await sgMail.send(msg);
+};
+
+export { sendCodeToEmail, sendConfirmEmail };

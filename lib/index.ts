@@ -4,14 +4,15 @@
 import { getExpirationDate, isCodeExpired } from "./date-fns";
 import firestore from "./firestore";
 import getRandomNum from "./random-seed";
-import sendCodeToEmail from "./sendgrid";
+import { sendCodeToEmail, sendConfirmEmail } from "./sendgrid";
 import { decodeToken, generateToken } from "./jwt";
 import { getProducts, getOneProduct } from "./algolia";
-import { createPreference } from "./mercadopago";
+import { createPreference, getMerchantOrder } from "./mercadopago";
 
 export {
   getRandomNum,
   sendCodeToEmail,
+  sendConfirmEmail,
   getExpirationDate,
   isCodeExpired,
   firestore,
@@ -20,4 +21,5 @@ export {
   getProducts,
   getOneProduct,
   createPreference,
+  getMerchantOrder,
 };

@@ -1,11 +1,11 @@
-import mercadopago from "mercadopago";
+import { merchant_orders, preferences, configure } from "mercadopago";
 
-mercadopago.configure({
+configure({
   access_token: process.env.MP_TOKEN,
 });
 
 const getMerchantOrder = async (id: string): Promise<string> => {
-  const res = await mercadopago.merchant_orders.get(id);
+  const res = await merchant_orders.get(id);
   const { external_reference } = res.response;
 
   return external_reference;
@@ -13,7 +13,7 @@ const getMerchantOrder = async (id: string): Promise<string> => {
 
 const createPreference = async (data: MPPreference): Promise<string> => {
   try {
-    const res = await mercadopago.preferences.create(data);
+    const res = await preferences.create(data);
     const { init_point } = res.response;
 
     return init_point;

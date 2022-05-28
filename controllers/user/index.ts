@@ -1,7 +1,7 @@
 import { getOrders } from "controllers";
 import { User } from "models";
 
-const getUserData = async (userId: string): Promise<any> => {
+const getUserData = async (userId: string): Promise<UserData> => {
   const user = new User(userId);
   await user.pull();
   return user.data;

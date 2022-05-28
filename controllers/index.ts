@@ -2,7 +2,7 @@
 import { getOrdersFromUser, getUserData, setOrderGenerated, updateUserData } from "./user";
 import { findUserByEmailAndCode, sendCode } from "./auth";
 import { getProductsByLimitAndOffset, getProductById } from "./product";
-import { generateOrder, getOrders } from "./order";
+import { generateOrder, getOneOrder, getOrders, setPurchaseAsConfirmed } from "./order";
 
 export {
   getUserData,
@@ -15,4 +15,6 @@ export {
   setOrderGenerated,
   getOrdersFromUser,
   getOrders,
+  getOneOrder,
+  setPurchaseAsConfirmed,
 };

@@ -7,7 +7,7 @@ export const sendCode = async (email: string): Promise<{ message }> => {
 
   const code = getRandomNum();
   const expires = getExpirationDate(); // * 20 minutes
-  auth.data = { ...auth.data, code, expires };
+  auth.setData({ code, expires });
 
   auth.push();
   await sendCodeToEmail({ email, code }); // * Sendgrid

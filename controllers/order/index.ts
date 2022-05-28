@@ -1,6 +1,6 @@
 import { getProductById, setOrderGenerated } from "controllers";
-import { createPreference } from "lib";
-import { Order } from "models";
+import { createPreference, getMerchantOrder, sendConfirmEmail } from "lib";
+import { Order, User } from "models";
 
 const generateOrder = async ({
   additionalInfo,
@@ -31,13 +31,31 @@ const generateOrder = async ({
   return await createPreference(data); // Return : URL para realizar el pago
 };
 
-const getOrders = async (orders) => {
-  const arrOrders = orders.map((order_id, index) => {
-    index = new Order(order_id);
-    return index.pull();
+const getOrders = async (orders: string[]): Promise<OrderData[] | []> => {
+  const arrOrders = orders.map((order_id) => {
+    const order = new Order(order_id);
+    return order.pull();
   });
 
   const results = await Promise.all(arrOrders);
   return results;
 };
-export { generateOrder, getOrders };
+
+const getOneOrder = async (order_id: string): Promise<OrderData> => {
+  const order = new Order(order_id);
+  await order.pull();
+  return order.data;
+};
+
+const setPurchaseAsConfirmed = async (id: string) => {
+  const order_id = await getMerchantOrder(id);
+
+  const order = new Order(order_id);
+  await order.setOrderAsPaid();
+
+  const user = new User(order.data.user_id);
+  await user.pull();
+
+  await sendConfirmEmail(user.data.email);
+};
+export { generateOrder, getOrders, getOneOrder, setPurchaseAsConfirmed };

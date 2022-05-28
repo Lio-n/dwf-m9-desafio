@@ -8,6 +8,7 @@ class Order extends Base {
   }
 
   static async createNewOrder({ additionalInfo = {}, productId, userId }: GenerateOrderParams) {
+    // * 'orderBase' : representa la estructura de cada Order
     const orderBase: OrderData = {
       status: "pending",
       additional_info: additionalInfo,

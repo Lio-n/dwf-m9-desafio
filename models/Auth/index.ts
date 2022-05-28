@@ -36,6 +36,8 @@ class Auth extends Base {
   }
   static async createNewAuth({ email, userId }: { email: string; userId: string }): Promise<Auth> {
     const cleanEmail = this.cleanEmail(email);
+
+    // * 'authBase' : representa la estructura de cada Auth
     const authBase = {
       email: cleanEmail,
       user_id: userId,

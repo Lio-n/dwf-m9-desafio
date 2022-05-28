@@ -13,6 +13,8 @@ class User extends Base {
   }
   static async createNewUser(email: string): Promise<User> {
     const cleanEmail = this.cleanEmail(email);
+
+    // * 'userBase' : representa la estructura de cada User
     const userBase = {
       email: cleanEmail,
       created_at: new Date(),
