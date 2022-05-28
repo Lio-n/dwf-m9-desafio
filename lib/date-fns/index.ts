@@ -1,5 +1,11 @@
-import { addMinutes } from "date-fns";
+import { addMinutes, fromUnixTime, isAfter } from "date-fns";
 
 const getExpirationDate = (): Date => addMinutes(new Date(), 20);
 
-export default getExpirationDate;
+const isCodeExpired = (expiresDate: number): boolean => {
+  const isExpired = isAfter(new Date(), fromUnixTime(expiresDate));
+  if (isExpired) return true;
+  return;
+};
+
+export { getExpirationDate, isCodeExpired };

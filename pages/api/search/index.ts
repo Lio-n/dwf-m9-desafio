@@ -1,16 +1,20 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextApiResponse } from "next";
 import { getProductsByLimitAndOffset } from "controllers";
-const methods = require("micro-method-router");
+import methods from "micro-method-router";
+import * as yup from "yup";
+import { schemaMiddleware } from "middleware";
 
 // $ GET /search?q=query&offset=0&limit=10
 // # Buscar productos en nuestra base de datos. Chequea stock y todo lo necesario.
 // # Este endpoint utiliza la técnica que vimos sobre Airtable y Algolia.
-const getProducts = async (req: NextApiRequest, res: NextApiResponse) => {
+const querySchema = yup.object().shape({
+  limit: yup.number(),
+  offset: yup.number(),
+  q: yup.string(),
+});
+const getProducts = async (res: NextApiResponse, { limit, offset, q }) => {
   try {
     // $ offSet = el tamaño del registro más el limit.
-    const { limit, offset, q } = req.query;
-
-    if (!q) throw "q is a required field";
 
     const { hits, nbHits, newLimit, newOffset } = await getProductsByLimitAndOffset({
       limit,
@@ -32,5 +36,5 @@ const getProducts = async (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 export default methods({
-  get: getProducts,
+  get: schemaMiddleware({ schema: querySchema, callback: getProducts, request: "query" }),
 });

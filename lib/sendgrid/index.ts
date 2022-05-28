@@ -6,7 +6,7 @@ type SendCodeToEmailParams = {
   email: string;
   code: number;
 };
-// Should : Change the email 'lionflex27@gmail.com'.
+
 const sendCodeToEmail = async ({ email, code }: SendCodeToEmailParams): Promise<void> => {
   const msg = {
     to: email,

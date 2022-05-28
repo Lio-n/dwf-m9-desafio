@@ -28,7 +28,7 @@ const generateOrder = async ({
     notification_url: "https://pagos-testing-mp.vercel.app/api/webhooks/mercadopago",
   };
 
-  return await createPreference(data);
+  return await createPreference(data); // Return : URL para realizar el pago
 };
 
 const getOrders = async (orders) => {

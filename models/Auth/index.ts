@@ -1,37 +1,14 @@
-import { firestore, generateToken } from "lib";
-import { fromUnixTime, isAfter } from "date-fns";
+import { firestore, generateToken, isCodeExpired } from "lib";
+import Base from "models/base_class";
 
-const collection = firestore.collection("auth");
-type AuthData = {
-  email: string;
-  user_id: string;
-  code: number;
-  expires: Date;
-};
-class Auth {
-  ref: FirebaseFirestore.DocumentReference;
-  data: AuthData;
-  id: string;
-  constructor(id) {
-    this.id = id;
-    this.ref = collection.doc(id);
+const coll = firestore.collection("auth");
+class Auth extends Base {
+  constructor(id: string) {
+    super({ id, ref: coll.doc(id) });
   }
-  async pull() {
-    const snap = await this.ref.get();
-    this.data = snap.data() as AuthData;
-  }
-  async push() {
-    this.ref.update(this.data);
-  }
-  setData(newData) {
-    this.data = { ...newData };
-  }
-  static cleanEmail({ email }: { email: string }) {
-    return email.trim().toLocaleLowerCase();
-  }
-  static async findByEmail({ email }: { email: string }): Promise<null | Auth> {
-    const cleanEmail = this.cleanEmail({ email });
-    const results = await collection.where("email", "==", cleanEmail).get();
+  static async findByEmail(email: string): Promise<null | Auth> {
+    const cleanEmail = this.cleanEmail(email);
+    const results = await coll.where("email", "==", cleanEmail).get();
 
     if (!results.docs.length) return null;
 
@@ -40,6 +17,7 @@ class Auth {
     newAuth.data = { ...first.data() } as AuthData;
     return newAuth;
   }
+
   static async findByEmailAndCode({
     email,
     code,
@@ -47,25 +25,24 @@ class Auth {
     email: string;
     code: number;
   }): Promise<{ token }> {
-    const auth = await this.findByEmail({ email });
+    const auth = await this.findByEmail(email);
 
     if (!auth) throw "El email no esta registrado";
     if (auth.data.code !== code) throw "El codigo no es valido";
-    if (isAfter(new Date(), fromUnixTime(auth.data.expires["_seconds"])))
-      throw "El tiempo ha expirado";
+    if (isCodeExpired(auth.data.expires["_seconds"])) throw "El tiempo ha expirado";
 
     const token = generateToken(auth.data.user_id);
     return { token };
   }
   static async createNewAuth({ email, userId }: { email: string; userId: string }): Promise<Auth> {
-    const cleanEmail = this.cleanEmail({ email });
+    const cleanEmail = this.cleanEmail(email);
     const authBase = {
-      email,
+      email: cleanEmail,
       user_id: userId,
       code: null,
       expires: null,
     };
-    const newAuthSnap = await collection.add(authBase);
+    const newAuthSnap = await coll.add(authBase);
     const newAuth = new Auth(newAuthSnap.id);
     newAuth.data = { email } as AuthData;
     return newAuth;

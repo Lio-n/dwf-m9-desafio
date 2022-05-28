@@ -1,45 +1,24 @@
 import { firestore } from "lib";
+import Base from "models/base_class";
 
-const collection = firestore.collection("order");
-type OrderData = {
-  status: "paid" | "pending" | "cancelled";
-  additional_info: object;
-  product_id: string;
-  user_id: string;
-  created_at: Date;
-  price_per_unit: number;
-  quantity: number;
-  total_cost: number;
-};
-class Order {
-  ref: FirebaseFirestore.DocumentReference;
-  data: OrderData;
-  id: string;
-  constructor(id) {
-    this.id = id;
-    this.ref = collection.doc(id);
-  }
-  async pull() {
-    const snap = await this.ref.get();
-    this.data = snap.data() as OrderData;
-    return this.data;
-  }
-  async push() {
-    this.ref.update(this.data);
+const coll = firestore.collection("order");
+class Order extends Base {
+  constructor(id: string) {
+    super({ id, ref: coll.doc(id) });
   }
 
   static async createNewOrder({ additionalInfo = {}, productId, userId }: GenerateOrderParams) {
-    const orderBase = {
+    const orderBase: OrderData = {
       status: "pending",
       additional_info: additionalInfo,
       product_id: productId,
       user_id: userId,
       created_at: new Date(),
-      price_per_unit: "",
-      quantity: "",
-      total_cost: "",
+      price_per_unit: null,
+      quantity: null,
+      total_cost: null,
     };
-    const newOrderSnap = await collection.add(orderBase);
+    const newOrderSnap = await coll.add(orderBase);
     // * El span no contiene la data solo el Id.
     return newOrderSnap.id;
   }

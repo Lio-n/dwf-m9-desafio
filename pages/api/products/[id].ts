@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getProductById } from "controllers";
-const methods = require("micro-method-router");
+import methods from "micro-method-router";
 
 // $ GET /products/{id}
 // # Obtiene toda data de un producto.

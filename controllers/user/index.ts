@@ -1,5 +1,5 @@
 import { getOrders } from "controllers";
-import { Order, User } from "models";
+import { User } from "models";
 
 const getUserData = async (userId: string): Promise<any> => {
   const user = new User(userId);
@@ -25,7 +25,7 @@ const updateUserData = async ({ data, userId }: UpdateUserDataParams): Promise<s
 
 const setOrderGenerated = async ({ userId, order_id }) => {
   const user = new User(userId);
-  user.saveOrderGenerated({ order_id });
+  user.saveOrderGenerated(order_id);
 };
 
 const getOrdersFromUser = async (userId) => {

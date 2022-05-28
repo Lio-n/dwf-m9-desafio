@@ -9,7 +9,7 @@ import { generateOrder } from "controllers";
 // * opcionalmente, data extra sobre esta compra en el body [...color, detalles de envío]
 const postOrder = async ({ req, res, userId }: CustomEndpoint) => {
   try {
-    const productId = req.query.productId as string;
+    const { productId } = req.query;
     if (!productId) throw "productId is a required field";
 
     const init_point = await generateOrder({
