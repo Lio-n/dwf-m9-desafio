@@ -16,10 +16,10 @@ class Base {
     this.data = snap.data() as any;
     return this.data;
   }
-  async push() {
+  push(): void {
     this.ref.update(this.data);
   }
-  setData(newData) {
+  setData(newData): void {
     this.data = { ...newData };
   }
   static cleanEmail(email: string) {

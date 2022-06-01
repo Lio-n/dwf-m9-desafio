@@ -1,13 +1,13 @@
 // * Los controllers no se comunican de manera DIRECTA con la Base de datos.
 import { getOrdersFromUser, getUserData, setOrderGenerated, updateUserData } from "./user";
-import { findUserByEmailAndCode, sendCode } from "./auth";
+import { validateEmailAndCode, sendCode } from "./auth";
 import { getProductsByLimitAndOffset, getProductById } from "./product";
 import { generateOrder, getOneOrder, getOrders, setPurchaseAsConfirmed } from "./order";
 
 export {
   getUserData,
   sendCode,
-  findUserByEmailAndCode,
+  validateEmailAndCode,
   updateUserData,
   getProductsByLimitAndOffset,
   getProductById,

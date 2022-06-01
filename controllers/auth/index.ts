@@ -2,7 +2,7 @@ import { User, Auth } from "models";
 import { getExpirationDate, getRandomNum, sendCodeToEmail } from "lib";
 
 // * Envía el código por email (usando sendgrid)
-export const sendCode = async (email: string): Promise<{ message }> => {
+const sendCode = async (email: string): Promise<{ message }> => {
   const auth = await findOrCreateAuth(email);
 
   const code = getRandomNum();
@@ -28,5 +28,7 @@ const findOrCreateAuth = async (email: string): Promise<Auth> => {
   return newAuth;
 };
 
-export const findUserByEmailAndCode = async ({ email, code }): Promise<{ token }> =>
+const validateEmailAndCode = async ({ email, code }): Promise<{ token }> =>
   await Auth.findByEmailAndCode({ email, code });
+
+export { sendCode, validateEmailAndCode };

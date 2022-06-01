@@ -17,6 +17,10 @@ class Auth extends Base {
     newAuth.data = { ...first.data() } as AuthData;
     return newAuth;
   }
+  static validateCode({ auth, code }: { auth: Auth; code: number }) {
+    if (auth.data.code !== code) throw "El codigo no es valido";
+    if (isCodeExpired(auth.data.expires["_seconds"])) throw "El tiempo ha expirado";
+  }
 
   static async findByEmailAndCode({
     email,
@@ -28,8 +32,7 @@ class Auth extends Base {
     const auth = await this.findByEmail(email);
 
     if (!auth) throw "El email no esta registrado";
-    if (auth.data.code !== code) throw "El codigo no es valido";
-    if (isCodeExpired(auth.data.expires["_seconds"])) throw "El tiempo ha expirado";
+    this.validateCode({ auth, code });
 
     const token = generateToken(auth.data.user_id);
     return { token };
