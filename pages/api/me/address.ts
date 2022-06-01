@@ -2,9 +2,11 @@ import methods from "micro-method-router";
 import { updateUserData } from "controllers";
 import { authMiddleware } from "middleware";
 
-// $ PATCH /me/address
-// # Permite modificar un dato puntual del usuario al que pertenezca el token usado en el request.
-// # En este caso el objeto que describe la dirección.
+/*  
+  $ PATCH /me/address
+  # Permite modificar un dato puntual del usuario al que pertenezca el token usado en el request.
+  # En este caso el objeto que describe la dirección.
+*/
 const patchMeAddress = async ({ req, res, userId }: CustomEndpoint) => {
   try {
     const { address } = req.body;

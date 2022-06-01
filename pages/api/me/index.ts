@@ -3,8 +3,10 @@ import { authMiddleware } from "middleware";
 import { getUserData, updateUserData } from "controllers";
 import * as yup from "yup";
 
-// $ GET /me
-// # Devuelve info del user asociado a ese token
+/*  
+  $ GET /me
+  # Devuelve info del user asociado a ese token
+*/
 const getMe = async ({ res, userId }: CustomEndpointWithoutReq) => {
   try {
     const userData = await getUserData(userId);
@@ -25,8 +27,10 @@ const bodySchema = yup
   })
   .noUnknown(true)
   .strict();
-// $ PATCH /me
-// # Permite modificar algunos datos del usuario al que pertenezca el token.
+/*  
+  $ PATCH /me
+  # Permite modificar algunos datos del usuario al que pertenezca el token.
+*/
 const patchMe = async ({ req, res, userId }: CustomEndpoint) => {
   try {
     const data = await bodySchema.validate(req.body);

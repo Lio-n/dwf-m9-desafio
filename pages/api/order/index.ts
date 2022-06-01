@@ -2,11 +2,13 @@ import methods from "micro-method-router";
 import { authMiddleware } from "middleware";
 import { generateOrder } from "controllers";
 
-// $ POST /order?productId={id}
-// # Genera una compra en nuestra base de datos y además genera una orden de pago en MercadoPago.
-// # Devuelve una URL de MercadoPago a donde vamos a redigirigir al user para que pague y el orderId.
-// * chequea el token y recupera la data del user de la db
-// * opcionalmente, data extra sobre esta compra en el body [...color, detalles de envío]
+/*  
+  $ POST /order?productId={id}
+  # Genera una compra en nuestra base de datos y además genera una orden de pago en MercadoPago.
+  # Devuelve una URL de MercadoPago a donde vamos a redigirigir al user para que pague y el orderId.
+  * chequea el token y recupera la data del user de la db
+  * opcionalmente, data extra sobre esta compra en el body [...color, detalles de envío]
+*/
 const postOrder = async ({ req, res, userId }: CustomEndpoint) => {
   try {
     const { productId } = req.query;

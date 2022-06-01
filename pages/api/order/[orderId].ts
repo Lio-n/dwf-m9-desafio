@@ -2,8 +2,10 @@ import methods from "micro-method-router";
 import { getOneOrder } from "controllers";
 import { NextApiRequest, NextApiResponse } from "next";
 
-// $ GET /order/{orderId}
-// # Devuelve una orden con toda la data incluyendo el estado de la orden.
+/*  
+  $ GET /order/{orderId}
+  # Devuelve una orden con toda la data incluyendo el estado de la orden.
+*/
 const getOrder = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { orderId } = req.query;

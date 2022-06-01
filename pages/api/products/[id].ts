@@ -2,8 +2,10 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getProductById } from "controllers";
 import methods from "micro-method-router";
 
-// $ GET /products/{id}
-// # Obtiene toda data de un producto.
+/*  
+  $ GET /products/{id}
+  # Obtiene toda data de un producto.
+*/
 const getProduct = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { id } = req.query;

@@ -4,8 +4,10 @@ import methods from "micro-method-router";
 import { sendCode } from "controllers";
 import { schemaMiddleware } from "middleware";
 
-// $ POST /auth
-// # Recibe un email y encuentra/crea un user con ese email y le envía un código vía email.
+/* 
+  $ POST /auth
+  # Recibe un email y encuentra/crea un user con ese email y le envía un código vía email.
+*/
 const bodySchema = yup.object().shape({ email: yup.string().email().required() });
 
 const postAuth = async (res: NextApiResponse, { email }) => {

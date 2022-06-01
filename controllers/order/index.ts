@@ -12,8 +12,10 @@ const generateOrder = async ({
 
   setOrderGenerated({ order_id, userId }); // Guardo en User las ordenes generadas
 
-  // * Elimino la propiedad 'description' del producto porque la API de MP me genera este error.
-  // * Error: The next fields are failing on validation: ".items[0].description": should NOT be longer than 256 characters.
+  /*
+   * Elimino la propiedad 'description' del producto porque la API de MP me genera este error.
+   * Error: The next fields are failing on validation: ".items[0].description": should NOT be longer than 256 characters.
+   */
   delete product.description;
 
   const data = {
