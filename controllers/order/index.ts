@@ -43,6 +43,8 @@ const getOrders = async (orders: string[]): Promise<OrderData[] | []> => {
 };
 
 const getOneOrder = async (order_id: string): Promise<OrderData> => {
+  await Order.validateOrderId(order_id);
+
   const order = new Order(order_id);
   await order.pull();
   return order.data;

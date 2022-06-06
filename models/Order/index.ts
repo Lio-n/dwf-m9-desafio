@@ -6,6 +6,10 @@ class Order extends Base {
   constructor(id: string) {
     super({ id, ref: coll.doc(id) });
   }
+  static async validateOrderId(order_id) {
+    const doc = await coll.doc(order_id).get();
+    if (!doc.exists) throw "orderId does not exist";
+  }
 
   static async createNewOrder({ additionalInfo = {}, productId, userId }: GenerateOrderParams) {
     // * 'orderBase' : representa la estructura de cada Order
