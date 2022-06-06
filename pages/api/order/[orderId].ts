@@ -9,6 +9,8 @@ import { NextApiRequest, NextApiResponse } from "next";
 const getOrder = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { orderId } = req.query;
+
+    // await existesOrderId(orderId)
     const order = await getOneOrder(orderId as string);
 
     res.status(200).json({ order });

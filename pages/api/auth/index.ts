@@ -8,7 +8,7 @@ import { schemaMiddleware } from "middleware";
   $ POST /auth
   # Recibe un email y encuentra/crea un user con ese email y le envía un código vía email.
 */
-const bodySchema = yup.object().shape({ email: yup.string().email().required() });
+const bodySchema = yup.object().shape({ email: yup.string().lowercase().trim().required() });
 
 const postAuth = async (res: NextApiResponse, { email }) => {
   try {

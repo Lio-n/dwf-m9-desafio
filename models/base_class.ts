@@ -22,8 +22,5 @@ class Base {
   setData(newData): void {
     this.data = { ...newData };
   }
-  static cleanEmail(email: string) {
-    return email.trim().toLocaleLowerCase();
-  }
 }
 export default Base;

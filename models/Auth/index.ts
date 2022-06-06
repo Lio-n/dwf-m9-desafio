@@ -7,8 +7,7 @@ class Auth extends Base {
     super({ id, ref: coll.doc(id) });
   }
   static async findByEmail(email: string): Promise<null | Auth> {
-    const cleanEmail = this.cleanEmail(email);
-    const results = await coll.where("email", "==", cleanEmail).get();
+    const results = await coll.where("email", "==", email).get();
 
     if (!results.docs.length) return null;
 
@@ -38,11 +37,9 @@ class Auth extends Base {
     return { token };
   }
   static async createNewAuth({ email, userId }: { email: string; userId: string }): Promise<Auth> {
-    const cleanEmail = this.cleanEmail(email);
-
     // * 'authBase' : representa la estructura de cada Auth
-    const authBase = {
-      email: cleanEmail,
+    const authBase: AuthData = {
+      email,
       user_id: userId,
       code: null,
       expires: null,

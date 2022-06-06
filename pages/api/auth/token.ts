@@ -10,7 +10,7 @@ import { validateEmailAndCode } from "controllers";
   # En el caso de que sean correctos, y que el código no esté vencido, devuelve un token e invalida el código.
 */
 const bodySchema = yup.object().shape({
-  email: yup.string().email().required(),
+  email: yup.string().lowercase().trim().required(),
   code: yup.number().positive().required(), // Transforma de string a number.
 });
 
