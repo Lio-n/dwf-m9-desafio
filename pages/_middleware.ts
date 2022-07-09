@@ -1,6 +1,7 @@
 import type { NextRequest } from "next/server";
 
 export function middleware(req: NextRequest) {
+  console.log("CORS");
   if (req.method == "OPTIONS") {
     return new Response("", {
       status: 204,
