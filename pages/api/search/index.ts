@@ -26,7 +26,7 @@ const getProducts = async (res: NextApiResponse, { limit, offset, q }) => {
 
     res.status(200).json({
       results: hits,
-      pagínation: {
+      pagination: {
         limit: newLimit,
         offset: newOffset,
         total: nbHits,
