@@ -20,10 +20,8 @@ const getMe = async ({ res, userId }: CustomEndpointWithoutReq) => {
 const bodySchema = yup
   .object()
   .shape({
-    email: yup.string().lowercase().trim().required(),
     full_name: yup.string(),
     address: yup.string(),
-    avatar_picture: yup.string(), // url : base64
   })
   .noUnknown(true)
   .strict();

@@ -7,15 +7,6 @@ const getUserData = async (userId: string): Promise<UserData> => {
   return user.data;
 };
 
-type UpdateUserDataParams = {
-  userId: string;
-  data: {
-    full_name?: string;
-    email?: string;
-    address?: string;
-    avatar_picture?: string;
-  };
-};
 const updateUserData = async ({ data, userId }: UpdateUserDataParams): Promise<string> => {
   const user = new User(userId);
   user.setData(data);

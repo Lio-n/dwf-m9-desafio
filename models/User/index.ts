@@ -19,7 +19,6 @@ class User extends Base {
       orders_generated: [],
       full_name: "",
       address: "",
-      avatar_picture: "",
     };
 
     const newUserSnap = await coll.add(userBase);

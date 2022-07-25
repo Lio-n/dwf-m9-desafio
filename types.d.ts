@@ -31,11 +31,10 @@ type GenerateOrderParams = {
 type UserData = {
   created_at: Date;
   orders_generated: string[]; // Cada vez que se completa una orden, la coll Order debe actualizar este campo.
+  email: string;
   // * ↓ Estas propiedades son posibles actulizar por el user.
   full_name: string;
-  email: string;
   address: string;
-  avatar_picture: string; // url : base64
 };
 
 type AuthData = {
@@ -77,4 +76,12 @@ type MPPreference = {
   };
   external_reference: string;
   notification_url: string;
+};
+
+type UpdateUserDataParams = {
+  userId: string;
+  data: {
+    full_name?: string;
+    address?: string;
+  };
 };
