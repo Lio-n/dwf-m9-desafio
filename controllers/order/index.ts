@@ -16,14 +16,14 @@ const generateOrder = async ({
    * Elimino la propiedad 'description' del producto porque la API de MP me genera este error.
    * Error: The next fields are failing on validation: ".items[0].description": should NOT be longer than 256 characters.
    */
-  delete product.description;
+  if (product.description.length >= 256) delete product.description;
 
   const data = {
     items: [product],
     back_urls: {
-      success: "url_pago_aprobado",
-      pending: "url_pago_pendiente",
-      failure: "url_pago_cancelado",
+      success: "https://dwf-m10-desafio.vercel.app/thanks",
+      pending: "https://dwf-m10-desafio.vercel.app/thanks",
+      failure: "https://dwf-m10-desafio.vercel.app",
     },
     external_reference: order_id,
     notification_url: "https://dwf-m9-desafio.vercel.app/api/ipn/mercadopago",
